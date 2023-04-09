@@ -1,0 +1,95 @@
+{{>layout/header}}
+<!-- ===============================================-->
+<!--    Main Content-->
+<!-- ===============================================-->
+<main class="main" id="top">
+    <section class="bg-primary-gradient h-100 py-0">
+        <div class="container">
+            <div class="row flex-center py-4">
+                <div class="col-md-6">
+                    <div class="accordion" id="list"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+{{>layout/script}}
+<script>
+
+    (function(){
+        resetTheme('{{from}}');
+    })()
+
+    const main = {
+        oneTime : false,
+        offset : 0,
+        limit : 7,
+        init () {
+            document.addEventListener('scroll',this.onScroll,{passive:true}) // 스크롤 이벤트함수정의
+            this.getList()
+        },
+        save : function () {
+
+        },
+        onScroll() {
+            if (($(document).height() - $(window).height())/2 <= $(window).scrollTop() && !main.oneTime) {
+                main.oneTime = true;
+                main.getList()
+            }
+        },
+        getList: function () {
+            let param = {
+                limit: this.limit,
+                offset: this.offset
+            }
+            api.call("GET", "/api/user/notices", param, '{{lang}}', (resp) => {
+                let data = resp.data
+                if (!resp.pageInfo.isLast) {
+                    main.offset = (resp.pageInfo.pageSize * (resp.pageInfo.pageNumber + 1))
+                    main.oneTime = false
+                } else {
+                    main.oneTime = true;
+                }
+
+                let html = ''
+                if (data.length > 0) {
+                    let num = (resp.pageInfo.offset + 1);
+                    data.forEach(function (list) {
+                        html += '<div class="accordion-item mb-2 rounded overflow-hidden">'
+                        html += '   <h2 class="accordion-header" id="heading' + num + '">'
+                        html += '       <button class="accordion-button px-4 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse' + num + '" aria-expanded="true" aria-controls="collapse' + num + '">'
+                        html += '           <div class="mb-0 text-start fs--1 text-900 fw-medium">' + list.subject + '<br>'
+                        html += '               <span class="mb-0 text-start fs--2">' + getDate(list.createdAt) + '</span>'
+                        html += '           </div>'
+                        html += '       </button>'
+                        html += '   </h2>'
+                        html += '   <div class="accordion-collapse collapse" id="collapse' + num + '" aria-labelledby="heading' + num + '" data-bs-parent="#list">'
+                        html += '       <div class="accordion-body bg-primary-gradient px-4 fs--2">' + list.contents + '</div>'
+                        html += '   </div>'
+                        html += '</div>'
+                        num++
+                    })
+                } else {
+                    // html += '<article class="column col4">'
+                    // html += '    <h4 class="col_desc">내용이 없습니다</h4>'
+                    // html += '</article>'
+                }
+
+                $("#list").append(html);
+            })
+        },
+    };
+
+    main.init();
+
+
+</script>
+{{>layout/footer}}
+
+
+
+
+

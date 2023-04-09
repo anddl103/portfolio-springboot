@@ -1,0 +1,45 @@
+{{>layout/header}}
+<!-- ===============================================-->
+<!--    Main Content-->
+<!-- ===============================================-->
+<main class="main" id="top">
+    <!-- ============================================-->
+    <!-- <section> begin ============================-->
+    <section class="h-100 pt-2">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-12 text-center text-md-start mb-6 px-4">
+                    <h4 id="subject" class="text-danger text-uppercase">{{detail.subject}}</h4>
+                    <p class="my-5 fs-1 pe-xl-7"><div class="text-dark">{{{ detail.contents }}}</div></p>
+                </div>
+            </div>
+        </div>
+        <!-- end of .container-->
+    </section>
+    <!-- <section> close ============================-->
+    <!-- ============================================-->
+
+</main>
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+{{>layout/script}}
+<script>
+    const titleHide = () => {
+        if (isMobile()) {
+            $("#subject").prop("hidden", true)
+        }
+    }
+
+    (function(){
+        titleHide()
+        resetTheme('{{from}}');
+    })()
+
+</script>
+{{>layout/footer}}
+
+
+
+
+

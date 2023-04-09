@@ -1,0 +1,37 @@
+larva:
+  version: ${version}
+  license: Licensed by Mobee-K Co.,Ltd.
+  api: /api
+
+spring:
+  profiles: # active profile (local|dev|qa|prod)
+    active: local
+  servlet:
+    multipart:
+      maxFileSize: 100MB
+      maxRequestSize: 100MB
+  devtools:
+    livereload:
+      enabled: true
+  output:
+    ansi:
+      enabled: always
+  cache:
+    jcache:
+      config:
+        classpath: eh-cache.xml
+
+logging: # logging
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss}[%thread] %-5level [%logger{0}:%line] - %msg%n'
+    file: '%d{yyyy-MM-dd HH:mm:ss}[%thread] %-5level [%logger{0}:%line] - %msg%n'
+    rolling-file-name: 'logs/hybe-api.%d{yyyy-MM-dd}_%i.log.gz'
+  file:
+    name: logs/hybe-api.log
+    max-size: 10MB
+    max-history: 30
+  level:
+    root: info
+
+server:
+  port: 8080

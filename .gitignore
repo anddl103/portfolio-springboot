@@ -1,0 +1,65 @@
+HELP.md
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### frontend ###
+/frontend/node_modules
+/frontend/dist
+/frontend/.cache
+/frontend/debug.log
+/frontend/package-lock.json
+/frontend/yarn.lock
+/frontend/yarn-error.log
+/frontend/.env
+/frontend/.env.development
+/frontend/.env.local
+/frontend/.env.production
+/frontend/.env.qa
+
+### backend ###
+/backend/src/main/resources/static
+/backend/logs/
+/backend/src/main/resources/profiles
+/backend/src/main/resources/firebase-conf-local.json
+/backend/src/main/resources/firebase-conf-dev.json
+/backend/src/main/resources/firebase-conf-qa.json
+/backend/src/main/resources/private_key.der
+/backend/yarn.lock
+/backend/node_modules
+
+### bundle ###
+/bundle/

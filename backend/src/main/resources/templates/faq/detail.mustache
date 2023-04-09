@@ -1,0 +1,31 @@
+{{>layout/header}}
+
+<main>
+    <section id="contents">
+        <div class="container">
+            <section id="cont_center" class="p-fb">
+                <article class="column col4">
+                    <h4 class="col_tit">{{detail.subject}}</h4>
+                    <!-- blog -->
+                    <div class="blog1">
+                        <h5 class="ir_su">Image1</h5>
+                        <figure>
+                            <figcaption>{{{ detail.contents }}}</figcaption>
+                        </figure>
+                    </div>
+                </article>
+            </section>
+            {{>layout/footerBar}}
+            <!-- //cont_center -->
+            <!-- //cont_right -->
+        </div>
+    </section>
+    <!-- //contents -->
+</main>
+
+{{>layout/footer}}
+
+
+
+
+

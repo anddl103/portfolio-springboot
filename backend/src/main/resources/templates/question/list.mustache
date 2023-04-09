@@ -1,0 +1,104 @@
+{{>layout/header}}
+<main class="main" id="top">
+<!--    <nav class="navbar navbar-expand-lg navbar-dark fixed-top py-4 d-block" data-navbar-on-scroll="data-navbar-on-scroll">-->
+<!--        <div class="container">-->
+<!--            <div class="navbar-brand"></div>-->
+<!--            -->
+<!--        </div>-->
+<!--    </nav>-->
+    <section class="bg-primary-gradient h-100 pt-2">
+        <div class="container">
+            <!-- FAQ -->
+<!--            <div class="row flex-center">-->
+<!--                <div class="col-md-12">-->
+<!--                    <h4 class="text-danger text-uppercase">FAQ</h4>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="row flex-center py-4">
+                <div class="col-md-6">
+                    <div class="list-group" id="list">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{{>layout/footerBack}}
+{{>layout/footerAdd}}
+{{>layout/script}}
+<script>
+    (function(){
+        resetTheme('{{from}}');
+    })()
+
+    const detail = (id) => {
+        self.location.href = "/view/question/detail/" + id + "?lang="+"{{lang}}"
+    }
+
+    const add = () => {
+        self.location.href = "/view/question/add?lang="+"{{lang}}"
+    }
+
+    const main = {
+        oneTime : false,
+        offset : 0,
+        limit : 7,
+        init () {
+            document.addEventListener('scroll',this.onScroll,{passive:true}) // 스크롤 이벤트함수정의
+            getToken()
+        },
+        save : function () {
+
+        },
+        onScroll() {
+            if (($(document).height() - $(window).height())/2 <= $(window).scrollTop() && !main.oneTime) {
+                main.oneTime = true;
+                main.getList()
+            }
+        },
+        getList: function () {
+
+            if (!api.token) {
+                return
+            }
+
+            let param = {
+                limit: this.limit,
+                offset: this.offset
+            }
+            api.call("GET", "/api/user/questions", param, '{{lang}}', (resp) => {
+                let data = resp.data
+                if (!resp.pageInfo.isLast) {
+                    main.offset = (resp.pageInfo.pageSize * (resp.pageInfo.pageNumber + 1))
+                    main.oneTime = false
+                } else {
+                    main.oneTime = true;
+                }
+
+                let html = ''
+                if (data.length > 0) {
+                    let num = (resp.pageInfo.offset + 1);
+                    data.forEach(function (list) {
+                        html += '<a href="/view/question/detail/'+ list.id +'?lang={{lang}}" class="list-group-item list-group-item-action lh-lg .a-text-list">'
+                        html += '   <div class="float-start w-75">' +  list.title
+                        html += '   <br><span class="mb-0 text-start fs--2">' + getDate(list.createdAt) + '</span></div>'
+                        html += '   <div class="float-right fs--2">'+(list.answer ? '답변완료' : '진행중')+'</div>'
+                        html += '</a>'
+                        num++
+                    })
+                } else {
+                    // html += '<article class="column col4">'
+                    // html += '    <h4 class="col_desc">내용이 없습니다</h4>'
+                    // html += '</article>'
+                }
+
+                $("#list").append(html);
+            }, true)
+        },
+    };
+
+    main.init();
+
+
+</script>
+{{>layout/footer}}

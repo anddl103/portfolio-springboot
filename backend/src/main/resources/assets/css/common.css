@@ -1,0 +1,23 @@
+label {
+    margin-bottom: 0px;
+}
+
+.div-right {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    -ms-flex-wrap: wrap;
+    -ms-flex-negative: 0;
+    -ms-flex-align: center;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    margin-top: 0;
+}
+.a-text-list {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 100%;
+}

@@ -1,0 +1,94 @@
+{{>layout/header}}
+<main class="main" id="top">
+    <section class="h-100 pt-2">
+        <div class="container">
+            <div class="row min-vh-lg-50 min-vh-xl-75">
+                <div class="col-lg-12 col-xl-12 mb-3">
+                    <div class="card card-span shadow py-4 px-3">
+                        <div class="card-body">
+                            <form class="row g-3 align-items-center">
+                                <div class="mb-3 form-top">
+                                    <label class="form-label col-12" for="question_title">Subject</label>
+                                    <input class="form-control form-traffico-control" id="question_title" type="text" placeholder="Subject"  />
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label col-12" for="question_content">Content</label>
+                                    <textarea class="form-control vh-35" placeholder="Content" id="question_content"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{{>layout/footerBack}}
+<div class="position-fixed py-2 px-3 bg-dark text-white rounded-pill" style="bottom:1rem;right:1rem;">
+    <div class="pull-right px-0">
+        <button class="btn btn-primary navbar-toggler fs-0 p-0" onclick="main.save()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
+                <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
+            </svg>
+            save
+        </button>
+    </div>
+</div>
+{{>layout/script}}
+<script>
+
+    (function(){
+        resetTheme('{{from}}');
+    })()
+
+    const main = {
+        oneTime : false,
+        offset : 0,
+        limit : 5,
+        token : '',
+        init () {
+            getToken()
+        },
+        save() {
+            let param = {
+                "title": $("#question_title").val(),
+                "content": $('#question_content').val()
+            }
+
+            api.call('POST', "/api/user/questions", param, '{{lang}}', (resp) => {
+               self.location.href="/view/question?lang="+"{{lang}}"
+            }, true)
+
+
+            /*
+            $.ajax({
+                type : "POST",
+                url: "/api/user/questions",
+                dataType:'json',
+                beforeSend : function(xhr){
+                    xhr.setRequestHeader("Content-type","application/json;charset=utf-8");
+                    xhr.setRequestHeader("x-access-token", api.token);
+                    xhr.setRequestHeader("Accept-Language", "{{lang}}");
+                },
+                timeout:6000,
+                data: JSON.stringify(param),
+                success: function (res) {
+                    console.log(res);
+                    // self.location.href="/view/question?lang="+"{{lang}}"
+                    // AppHandler.postMessage('info:')
+                }
+            })
+            */
+        },
+    };
+
+    main.init();
+
+</script>
+
+
+{{>layout/footer}}
+
+
+
+

@@ -1,0 +1,56 @@
+{{>layout/header}}
+
+<main class="main" id="top">
+    <section class="bg-primary-gradient h-100">
+        <div class="container">
+            <!-- FAQ -->
+            <div class="row flex-center">
+                <div class="col-md-12">
+                    <h4 class="text-danger text-uppercase">FAQ</h4>
+                </div>
+            </div>
+            <div class="row flex-center py-4">
+                <div class="col-md-6">
+                    <div class="list-group">
+                        {{#category}}
+                            <a onclick="linkCategory('{{id}}')"  class="list-group-item list-group-item-action lh-lg">{{subject}} <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                        {{/category}}
+                    </div>
+                </div>
+            </div>
+            <!-- Q&A -->
+            <div class="row flex-center">
+                <div class="col-md-12">
+                    <h4 class="text-danger text-uppercase">Q&A</h4>
+                </div>
+            </div>
+            <div class="row flex-center py-4">
+                <div class="col-md-6">
+                    <div class="list-group">
+                        <a onclick="linkQuestion()" class="list-group-item list-group-item-action lh-lg">1:1 Q&A</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{{>layout/script}}
+<script>
+    (function(){
+        resetTheme('{{from}}');
+    })()
+
+    const linkCategory = (id) => {
+        self.location.href = "/view/faq/" + id + "?lang="+"{{lang}}"
+    }
+
+    const linkQuestion = () => {
+        self.location.href = "/view/question?lang="+"{{lang}}"
+    }
+</script>
+{{>layout/footer}}
+
+
+
+
+

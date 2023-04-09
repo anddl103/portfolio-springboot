@@ -1,0 +1,74 @@
+{{>layout/header}}
+
+<main class="main" id="top">
+    <section class="h-100 pt-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-md-start mb-6">
+                    <h4 class="text-danger"><div id="title" class="text-center"></div></h4>
+                    <div class="card card-span shadow py-4 px-3">
+                        <div class="card-body">
+                            <p class="my-5 fs-1 pe-xl-8"><div id="content"></div></p>
+                        </div>
+                    </div>
+                    <div class="card card-span bg-soft-primary border-start border-primary border-5 mt-3" hidden id="divAnswer">
+                        <div class="card-body">
+                            <h4 class="lh-base px-lg-5 py-3">
+                                <div id="answer"></div>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end of .container-->
+    </section>
+</main>
+{{>layout/footerBack}}
+{{>layout/script}}
+<script>
+
+    (function(){
+        resetTheme('{{from}}');
+    })()
+
+    const main = {
+        oneTime : false,
+        offset : 0,
+        limit : 5,
+        init () {
+            getToken()
+
+            $("#title").html("")
+            $("#content").html("")
+            $("#answer").html("")
+            $("#divAnswer").prop("hidden", true)
+        },
+        getDetail() {
+            if (!api.token) {
+                return
+            }
+
+            api.call("GET", "/api/user/questions/{{ id }}", {}, '{{lang}}', (resp) => {
+                const data = resp.data;
+                $("#title").html(data.title)
+                $("#content").html(data.content)
+
+                if (data.answer) {
+                    $("#divAnswer").prop("hidden", false)
+                    $("#answer").html(data.answer)
+                }
+
+            }, true)
+        }
+    };
+
+    main.init();
+
+</script>
+{{>layout/footer}}
+
+
+
+
+
